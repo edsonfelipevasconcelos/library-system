@@ -1,0 +1,34 @@
+int main() {
+    Book books[5];
+
+    books[0].setBookDetails("Book1", "Author1", "111", "2024");
+    books[1].setBookDetails("Book2", "Author2", "222", "2024");
+    books[2].setBookDetails("Book3", "Author3", "333", "2024");
+    books[3].setBookDetails("Book4", "Author4", "444", "2024");
+    books[4].setBookDetails("Book5", "Author5", "555", "2024");
+
+    string input;
+
+    while (true) {
+        cout << "Enter ISBN to borrow (0 to exit): ";
+        cin >> input;
+
+        if (input == "0") break;
+
+        bool found = false;
+
+        for (int i = 0; i < 5; i++) {
+            if (books[i].getISBN() == input) {
+                books[i].borrowBook();
+                found = true;
+                break;
+            }
+        }
+
+        if (!found) {
+            cout << "Book not found.\n";
+        }
+    }
+
+    return 0;
+}
