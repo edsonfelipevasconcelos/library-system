@@ -3,15 +3,14 @@ using namespace std;
 
 class Book {
 private:
-    string title, author, ISBN, dateAdd;
+    string title, author, ISBN;
     bool available;
 
 public:
-    void setBookDetails(string t, string a, string i, string d) {
+    void setBookDetails(string t, string a, string i) {
         title = t;
         author = a;
         ISBN = i;
-        dateAdd = d;
         available = true;
     }
 
@@ -21,6 +20,14 @@ public:
         cout << "ISBN: " << ISBN << endl;
         cout << "Available: " << (available ? "Yes" : "No") << endl;
         cout << "------------------------" << endl;
+    }
+
+    string getISBN() {
+        return ISBN;
+    }
+
+    bool isAvailable() {
+        return available;
     }
 
     void borrowBook() {
@@ -36,9 +43,74 @@ public:
         available = true;
         cout << "Book returned successfully.\n";
     }
-
-    string getISBN() {
-        return ISBN;
-    }
-//final version
 };
+
+int main() {
+    Book books[5];
+
+    books[0].setBookDetails("C++ Programming", "Bjarne Stroustrup", "111");
+    books[1].setBookDetails("Data Structures", "Mark Weiss", "222");
+    books[2].setBookDetails("Clean Code", "Robert Martin", "333");
+    books[3].setBookDetails("Operating Systems", "Silberschatz", "444");
+    books[4].setBookDetails("Database Systems", "Silberschatz", "555");
+
+    int choice;
+    string isbn;
+
+    do {
+        // MENU
+        cout << "\n===== LIBRARY MENU =====\n";
+        cout << "1) Display Books\n";
+        cout << "2) Borrow Book\n";
+        cout << "3) Return Book\n";
+        cout << "4) Exit\n";
+        cout << "Select option: ";
+        cin >> choice;
+
+        switch (choice) {
+
+        case 1: // Display
+            cout << "\nAvailable Books:\n";
+            for (int i = 0; i < 5; i++) {
+                books[i].displayBookDetails();
+            }
+            break;
+
+        case 2: // Borrow
+            cout << "Enter ISBN to borrow: ";
+            cin >> isbn;
+
+            for (int i = 0; i < 5; i++) {
+                if (books[i].getISBN() == isbn) {
+                    books[i].borrowBook();
+                    break;
+                }
+                if (i == 4) cout << "Book not found.\n";
+            }
+            break;
+
+        case 3: // Return
+            cout << "Enter ISBN to return: ";
+            cin >> isbn;
+
+            for (int i = 0; i < 5; i++) {
+                if (books[i].getISBN() == isbn) {
+                    books[i].returnBook();
+                    break;
+                }
+                if (i == 4) cout << "Book not found.\n";
+            }
+            break;
+
+        case 4:
+            cout << "Exiting system...\n";
+            break;
+
+        default:
+            cout << "Invalid option.\n";
+        }
+
+    } while (choice != 4);
+
+    return 0;
+}
